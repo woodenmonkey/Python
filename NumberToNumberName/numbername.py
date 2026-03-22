@@ -35,3 +35,43 @@ placeValueDict = {
         9 : "Septilion",
         10 : "Octillion"
 }
+
+print("Maximum Input: 999,999,999,999,999,999,999,999,999,999")
+print("Minimum Input: -999,999,999,999,999,999,999,999,999,999\n")
+
+isNegative = False
+
+while True:
+        num = input(f"Enter a number: {Y}")
+        print(f"{W}", end="")
+
+        try:
+                splittedNum = num.split(".")
+
+                splittedNum[0] = splittedNum[0].replace(" ", "")
+                if len(splittedNum) == 2:
+                        splittedNum[1] = splittedNum[1].replace(" ", "")
+                        splittedNum[1] = splittedNum[1].rstrip("0")
+
+                        if splittedNum[1] == "":
+                                splittedNum.remove("")
+
+                num = int(splittedNum[0])
+
+                if len(splittedNum) == 1:
+                        placeholder = splittedNum[0]
+                        placeholder = int(placeholder)
+                else:
+                        placeholder = splittedNum[0] + "." + splittedNum[1]
+                        placeholder = float(placeholder)
+
+                if num >= 1000000000000000000000000000000 or num <= -1000000000000000000000000000000:
+                        print("Input out of range\n")
+                else:
+                        if num < 0:
+                                isNegative = True
+                                num = num * (-1)
+                        break
+        except ValueError or EOFError:
+                print("Invalid Input\n")        
+
