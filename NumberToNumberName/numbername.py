@@ -9,6 +9,10 @@ Y = "\033[38;2;255;200;0m"
 W = "\033[38;2;212;212;212;0m"
 B = "\033[38;2;108;180;238m;0m"
 
+groupedList = []
+name = ""
+nameList = []
+
 numDict = {
         1 : "One", 2 : "Two", 3 : "Three", 4 : "Four", 5 : "Five",
         6 : "Six", 7 : "Seven", 8 : "Eight", 9 : "Nine", 10 : "Ten",
@@ -75,3 +79,63 @@ while True:
         except ValueError or EOFError:
                 print("Invalid Input\n")        
 
+
+if num == 0:
+        print(f"0 in words is: {Y}Zero{W}")
+else:
+        while num > 0:
+                groupedList.append(num % 1000)
+                num //= 1000
+
+        groupedList.reverse()
+
+        for i in groupedList:
+                if i != 0:
+                        if i >= 100:
+                                name = name + numDict[int(i/100)] + " Hundred"
+                                i = i % 100
+
+                        if i >= 20:
+                                if name == "":
+                                        name = name + numDict[i  - (i % 10)]
+                                else:
+                                        name = name + " " + numDict[i - (i % 10)]
+
+                                i = i % 10
+                        elif i >= 10:
+                                if name == "":
+                                        name = name + numDict[i]
+                                else:
+                                        name = name + " " + numDict[i]
+
+                                i = i % 10
+
+                        if i != 0:
+                                if name == "":
+                                        name = name + numDict[i]
+                                else:
+                                        name = name + " " + numDict[i]
+
+                        nameList.append(name)
+                        name = ""
+                else:
+                        nameList.append("")
+
+        for i in range(len(groupedList)):
+                if nameList[i] != "":
+                        name = name + nameList[i] + " " + placeValueDict[len(groupedList) - i] + " "
+
+        name = name.rstrip()
+
+        if len(splittedNum) == 2 and splittedNum[1] != "":
+                name = name + f" {B}Point{Y}"
+
+                for i in splittedNum[1]:
+                        name = name + " " + digits[i]
+
+                print(f"{W}", end="")
+
+        if isNegative == False:
+                print(f"\n{placeholder} in words is: {Y}{name}{W}")
+        else:
+                print(f"\n{placeholder} in words is: {Y}Minus {name}{W}")
